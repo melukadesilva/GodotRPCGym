@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package rlc;
+
+service RLC {
+
+    rpc Step(ActionData) returns (ObservationData) {}
+    rpc Reset(Empty) returns (ObservationData) {}
+    rpc Terminate(Empty) returns (Empty) {}
+
+}
+
+message Empty {
+
+}
+
+message ObservationData {
+    repeated float observations = 1;
+    float reward = 2;
+    int64 is_done = 3; 
+}
+
+message ActionData {
+    repeated float action_index = 1;
+    int64 env_action = 2;
+}

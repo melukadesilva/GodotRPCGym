@@ -1,0 +1,52 @@
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+project(grpc_client CXX)
+
+find_package(Torch REQUIRED)
+find_package(Boost REQUIRED)
+
+include(FetchContent)
+FetchContent_Declare(
+        gRPC
+        GIT_REPOSITORY https://github.com/grpc/grpc
+        GIT_TAG        v1.44.0
+)
+set(FETCHCONTENT_QUIET OFF)
+FetchContent_MakeAvailable(gRPC)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
+# Generated sources
+set(hw_proto_srcs "./observation_action.pb.cc")
+set(hw_proto_hdrs "./observation_action.pb.h")
+set(hw_grpc_srcs "./observation_action.grpc.pb.cc")
+set(hw_grpc_hdrs "./observation_action.grpc.pb.h")
+
+# hw_grpc_proto
+add_library(hw_grpc_proto
+        ${hw_grpc_srcs}
+        ${hw_grpc_hdrs}
+        ${hw_proto_srcs}
+        ${hw_proto_hdrs})
+
+target_link_libraries(hw_grpc_proto
+        ${_REFLECTION}
+        ${_GRPC_GRPCPP}
+        ${_PROTOBUF_LIBPROTOBUF})
+
+set(SOURCES rcl_server.cc godotInterface/cGodotSharedInterface.h godotInterface/cGodotSharedInterface.cpp)
+add_executable(grpc_client ${SOURCES})
+# target_include_directories(grpc_client PRIVATE godotInterface/)
+
+set_property(TARGET grpc_client PROPERTY CXX_STANDARD 14)
+
+# add_library(godotInterface godotInterface/cGodotSharedInterface.h godotInterface/cGodotSharedInterface.cpp)
+include_directories( "${Boost_INCLUDE_DIR}" )
+target_link_libraries(grpc_client "${TORCH_LIBRARIES}" "${Boost_LIBRARIES}" grpc++ hw_grpc_proto
+        ${_REFLECTION}
+        ${_GRPC_GRPCPP}
+        ${_PROTOBUF_LIBPROTOBUF})
+# target_link_libraries(grpc_client godotInterface)
+
+# include_directories(godotInterface/)
+# set(INCLUDE_DIR, godotInterface/)
+# target_include_directories(grpc_client PUBLIC godotInterface/)

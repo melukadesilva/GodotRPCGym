@@ -1,0 +1,42 @@
+#include "godotInterface/cGodotSharedInterface.h"
+
+int main(int argc, char* argv[]) {
+    // make a cSharedMemoryTensor
+    cSharedMemoryTensor mem("env");
+    cSharedMemorySemaphore sem_obs("obs_semaphore", 0);
+    cSharedMemorySemaphore sem_act("act_semaphore", 0);
+
+    torch::Tensor test_tensor = torch::ones(3);
+    // std::cout << test_tensor << std::endl;
+
+    // write to the shared memory
+    cPersistentFloatTensor *action = mem.newFloatTensor("action", 3);
+    cPersistentFloatTensor *observation = mem.newFloatTensor("observation", 2);
+
+    for(;;) {
+        action->write(test_tensor);
+        sem_act.post();
+
+        sem_obs.wait();
+        torch::Tensor obs = observation->read();
+        std::cout << "observation received " << obs  << std::endl;
+    }
+
+
+    // read the tensor
+    // torch::Tensor a = tens->read();
+    // std::cout << a << std::endl;
+
+    /*
+    managed_shared_memory segment(open_only, "test_segment");
+
+    FloatVector *v = segment.find<FloatVector> ("T").first;
+    std::cout<<"C++ from Python = [";
+    for(int i=0;i<v->size(); i++){
+        std::cout<<(*v)[i]<<", ";
+    }
+    std::cout<<"]";
+    */
+
+    return 0;
+}

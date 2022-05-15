@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/cmd/Documents/cpp_libs/libtorch/include",
+                "/home/cmd/Documents/cpp_libs/boost_1_78_0",
+                "/home/cmd/Documents/cpp_libs/libtorch/include/torch/csrc/api/include",
+                "/home/cmd/Documents/cpp_libs/grpc",
+                "/home/cmd/Documents/cpp_libs/grpc/include",
+                "/home/cmd/Documents/cpp_libs/grpc/third_party/abseil-cpp",
+                "/home/cmd/Documents/cpp_libs/grpc/third_party/protobuf/src"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}
