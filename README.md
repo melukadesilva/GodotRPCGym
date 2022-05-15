@@ -1,4 +1,4 @@
-# rl_grpc
+# GodotRPCGym
 rl grpc
 
 A Server Client Architecture for training reinforcement learning (RL) agents.
