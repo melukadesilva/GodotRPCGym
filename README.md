@@ -14,3 +14,6 @@ Installation:
 5. Test with the Existing Godot Environments
 
 THIS PROJECT IS STILL UNDER DEVELOPMENT 
+
+![](smart_creep.gif)
+
