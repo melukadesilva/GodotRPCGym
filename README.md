@@ -2,8 +2,8 @@
 
 A Server Client Architecture for training reinforcement learning (RL) agents.
 One can design a Simulation Environment in GODOT (game engine) and use Pytorch Baseline-3 RL library to train the agent.
-Under the hood the Godot uses the libtorch and boost to write the simulation state and read action via a shared memory (GymGodot: https://github.com/lupoglaz/GodotAIGym.git)
-A RPC server (that bridges the Godot and Python RL agent) written in C++ reads this shared memory using boost lib and communicate with a RPC client written in Python (the RL trainer).
+Under the hood the Godot uses the libtorch and boost to write the simulation state and read the actions via a shared memory buffer (GymGodot: https://github.com/lupoglaz/GodotAIGym.git)
+A RPC server (that bridges the Godot and Python RL agent) written in C++ reads the shared memory using the boost lib and communicates with a RPC client written in Python (the RL trainer).
 The data is serialized using Protocol buffers.
 
 Installation:
